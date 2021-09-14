@@ -8,7 +8,7 @@ class Solution:
         K=self.K
         carry = 0
         for i in range(len(A) - 1, -1, -1):
-            A[i], carry = (carry + A[i] + K % 10) % 10, (carry + A[i] + K % 10) // 10
+            A[i], carry = (carry + A[i] + K % 10) % 10, (carry + A[i] + K % 10) // 10  # //"表示整数除法。
             K //= 10
         B = []
         # 如果全部加完还有进位，需要特殊处理。 比如 A = [2], K = 998
