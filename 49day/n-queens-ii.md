@@ -44,3 +44,47 @@ public:
 复杂度分析:
 时间复杂度: O(N!)
 空间复杂度: O(N)
+
+自己做的：
+class Solution {
+public:
+    int totalNQueens(int n) {
+        set<int> cols;
+        set<int> piediagonal;
+        set<int> nadiagonal;
+        
+        return backtrack(n, 0, cols, piediagonal, nadiagonal);
+    }
+    
+private:
+     int backtrack(int n, int row, set<int> cols, set<int> piediagonal, set<int> nadiagonal){
+        if(row == n){
+            return 1;
+        }
+        
+        int count = 0;
+        for(int i = 0; i < n; i++){ // iterate each column
+            if(cols.count(i)){
+                continue;
+            }
+            
+            if(piediagonal.count(row - i)){ // 撇做差diagonal from left top to right bottom
+                continue;
+            }
+            
+            if(nadiagonal.count(row + i)){ // 捺做和 diagonal from right top to left bottom
+                continue;
+            }
+            
+            cols.insert(i);
+            piediagonal.insert(row - i);
+            nadiagonal.insert(row + i);
+            count += backtrack(n, row + 1, cols, piediagonal, nadiagonal);
+            //回溯算法，重新选定i后计算所有可能性
+            cols.erase(i);
+            piediagonal.erase(row - i);
+            nadiagonal.erase(row + i);
+        }
+        return count;
+    }
+};
